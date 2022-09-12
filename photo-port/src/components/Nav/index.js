@@ -34,14 +34,17 @@ function Nav() {
     <header className="flex-row">
       <h2>
         {/* //adding the logo to the navigation and the About and Contact sections.  */}
-        <a href="/">
+        {/* //reason we'll use a separate data-testid attribute specific for testing purposes 
+        //instead of using the id attribute is the same as why we don't query an element
+        // by its class: to follow the best-practice principle of separating concerns. */}
+        <a data-testid="link" href="/">
           <span role="img" aria-label="camera"> 📸</span>Oh Snap!
           </a>
       </h2>
       <nav>
       <ul className="flex-row">
       <li className="mx-2">
-            <a href="#about">About Me</a>
+            <a data-testid="about" href="#about">About Me</a>
           </li>
           <li>
             <span>Contact</span>
