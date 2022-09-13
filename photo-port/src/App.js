@@ -27,13 +27,15 @@ function App() {
   return (
     <div>
       <Nav
+      // conditional rendering
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
       ></Nav>
       <main>
-        {/* //pass the current category, 
-        //which is the category selected by the user, from the Gallery component */}
+        {/* conditional rendering
+        //pass the current category, which is the category selected by the user,
+         from the Gallery component */}
         <Gallery currentCategory={currentCategory}></Gallery>
         <About></About>
       </main>
