@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Nav from "./components/Nav";
 import About from "./components/About";
 import Gallery from "./components/Gallery";
+import ContactForm from "./components/Contact";
 
 function App() {
   //lift the props to parent
@@ -27,12 +28,13 @@ function App() {
   return (
     <div>
       <Nav
-      // conditional rendering
+        // conditional rendering
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
       ></Nav>
       <main>
+        <ContactForm></ContactForm>
         {/* conditional rendering
         //pass the current category, which is the category selected by the user,
          from the Gallery component */}
