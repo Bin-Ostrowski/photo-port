@@ -138,9 +138,9 @@ const PhotoList = ({category}) => {
   const toggleModal =(image, i) => {
     //updated current photo state with data retrieved through click event.
     setCurrentPhoto({...image, index: i})
-    //update isModalOpen value to true. This will evaluate the short circuit
-    //statement to render the modal
-    setIsModalOpen(true);
+    //when the toggleModal function is executed, 
+    //the value of isModalOpen is toggled from true to false
+    setIsModalOpen(!isModalOpen);
   }
 
   //manage the current photo state and make this data accessible to the Modal component through props
@@ -148,10 +148,10 @@ const [currentPhoto, setCurrentPhoto] = useState();
 
   return (
     <div>
-      {/* pass in currentPhoto as a prop to the Modal. use the short-circuit 
+      {/* pass in currentPhoto and toggleModal as props to the Modal. use the short-circuit 
       AND operator, && conditionally render the modal based on 
       whether an image has been clicked using isModalOpen state */}
-      {isModalOpen && <Modal currentPhoto={currentPhoto}/>}
+      {isModalOpen && <Modal currentPhoto={currentPhoto} onClose={toggleModal}/>}
       <div className="flex-row">
         {/* // map over the images in PhotoList(now filtered currentPhoto array)
          without having to import each one at the top */}
