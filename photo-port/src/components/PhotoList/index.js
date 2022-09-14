@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from '../Modal';
 
 //in the Photolist component, we can pass in the prop, so it will send to gallery
 //however PhotoList, the props.category value has been passed down from Gallery as currentCategory.name
@@ -128,8 +129,29 @@ const PhotoList = ({category}) => {
   // it is returned in an array and assigned to currentPhotos
   const currentPhotos = photos.filter((photo) => photo.category === category);
 
+  //set initial state of isModalOpen to false, want it to to open 
+  //when a user clicked on an image
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+
+  // define ToggleModal function
+  const toggleModal =(image, i) => {
+    //updated current photo state with data retrieved through click event.
+    setCurrentPhoto({...image, index: i})
+    //update isModalOpen value to true. This will evaluate the short circuit
+    //statement to render the modal
+    setIsModalOpen(true);
+  }
+
+  //manage the current photo state and make this data accessible to the Modal component through props
+const [currentPhoto, setCurrentPhoto] = useState();
+
   return (
     <div>
+      {/* pass in currentPhoto as a prop to the Modal. use the short-circuit 
+      AND operator, && conditionally render the modal based on 
+      whether an image has been clicked using isModalOpen state */}
+      {isModalOpen && <Modal currentPhoto={currentPhoto}/>}
       <div className="flex-row">
         {/* // map over the images in PhotoList(now filtered currentPhoto array)
          without having to import each one at the top */}
@@ -142,6 +164,10 @@ const PhotoList = ({category}) => {
             //alt attribute is used for accessibility user-assistance devices, such as screen readers, so the image's name was assigned
             alt={image.name}
             className="img-thumbnail mx-1"
+            //assign a click handler function to capture the individual photo data
+            //image object represents the element in the photos array, 
+            //and the i will render the image
+            onClick={() => toggleModal(image, i)}
             //key attribute was also assigned the image's name. This attribute value must be a unique string. 
             //absence of unique key value will cause an error message. 
             key={image.name}
