@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
 function Nav(props) {
@@ -6,21 +6,22 @@ function Nav(props) {
   //Instead of just listing each category's name, we'll create objects that contain each category's name and a short description.
   //That way, we can use that same data elsewhere in the app.
 
-
-    const {
-      categories = [],
-      setCurrentCategory,
-      currentCategory,
-    } = props;
+  const {
+    categories = [],
+    setCurrentCategory,
+    currentCategory,
+    contactSelected,
+    setContactSelected,
+  } = props;
 
   //use the useEffect Hook by invoking the function
   useEffect(() => {
     document.title = capitalizeFirstLetter(currentCategory.name);
   }, [currentCategory]);
-  //first argument is the callback function, and the second argument is an array with a 
-  //single element, currentCategory. The second argument directs the hook to re-render 
-  //the component on changes to the value of this state. In other words, 
-  //if currentCategory changes now, the component will re-render so that the change 
+  //first argument is the callback function, and the second argument is an array with a
+  //single element, currentCategory. The second argument directs the hook to re-render
+  //the component on changes to the value of this state. In other words,
+  //if currentCategory changes now, the component will re-render so that the change
   //in document.title will be visible to the use
 
   return (
@@ -32,32 +33,43 @@ function Nav(props) {
         // by its class: to follow the best-practice principle of separating concerns. */}
         <a data-testid="link" href="/">
           <span role="img" aria-label="camera">
-            {" "} 
+            {" "}
             📸
-            </span>{" "}
-            Oh Snap!
-          </a>
+          </span>{" "}
+          Oh Snap!
+        </a>
       </h2>
       <nav>
-      <ul className="flex-row">
-      <li className="mx-2">
-            <a data-testid="about" href="#about">About Me</a>
+        <ul className="flex-row">
+          <li className="mx-2">
+            {/* //when About is selected, contactSelected is set to false,
+             and the About component is rendered */}
+            <a data-testid="about" href="#about" onClick={() => setContactSelected(false)}>
+              About Me
+            </a>
           </li>
-          <li>
-            <span>Contact</span>
+          {/* //Add Conditional Styling only style when contactSelected is ture
+          we want to add the CSS class navActive
+          use { } to contain the JavaScript expression, template literal to 
+          interpolate the JavaScript statement*/}
+          <li className={`mx-2 ${contactSelected && 'navActive'}`}>
+            {/* //set the value of contactSelected to true when selecting 
+            he Contact item in the menu  */}
+            <span onClick={() => setContactSelected(true)}>Contact</span>
           </li>
           {/* //map over the categories array*/}
           {/* Whenever we map over anything in JSX, the outermost element must have a key attribute 
           that's set to be something unique. This helps React keep track of items in the virtual DOM */}
-                 {categories.map((category) => (
-
+          {categories.map((category) => (
             //short-circuit expression
-            //currentCategory.name === category.name will get evaluated, and as long as it is true, 
-            //then the second bit of the short circuit, navActive, will be returned.
-            <li  className={`mx-1 ${
-              currentCategory.name === category.name && 'navActive'
+            //navActive class value is assigned only if Contact hasn't been selected and the
+            // current category HAS been selectede.
+            <li
+              className={`mx-1 ${
+                currentCategory.name === category.name && !contactSelected && "navActive"
               }`}
-            key={category.name}>
+              key={category.name}
+            >
               {/* //Note also the use of parentheses in the map callback to return JSX. When you map over 
                 //an array in a JSX expression, you should return only a single JSX element—like how you 
                 //can only return a single element from a React component. */}
@@ -67,7 +79,8 @@ function Nav(props) {
               {/* //In that case, let's wrap the categorySelected reference in an anonymous arrow function */}
               <span
                 onClick={() => {
-                  setCurrentCategory(category)
+                  setCurrentCategory(category);
+                  setContactSelected(false);
                 }}
               >
                 {capitalizeFirstLetter(category.name)}
