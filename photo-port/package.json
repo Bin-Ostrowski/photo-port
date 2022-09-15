@@ -2,7 +2,7 @@
   "name": "photo-port",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://bin-ostrowski.github.io/photo-port",
+  "homepage": "https://bin-ostrowski.github.io/photo-port",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^11.1.0",
